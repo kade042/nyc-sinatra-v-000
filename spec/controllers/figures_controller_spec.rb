@@ -29,6 +29,7 @@ describe FiguresController do
   it "allows you to create a new figure with a title" do
     visit '/figures/new'
     fill_in :figure_name, :with => "Doctor Who"
+    #binding.pry
     check "title_#{Title.first.id}"
     click_button "Create New Figure"
     figure = Figure.last
@@ -56,6 +57,7 @@ describe FiguresController do
     figure = Figure.last
     title = Title.last
     expect(Figure.all.count).to eq(3)
+    #binding.pry
     expect(Title.all.count).to eq(2)
     expect(figure.name).to eq("Doctor Who")
     expect(figure.titles).to include(title)
@@ -76,7 +78,7 @@ describe FiguresController do
 
   it "allows you to list all figures" do
     visit '/figures'
-    
+
     expect(page.status_code).to eq(200)
 
     expect(page.body).to include("Beyonce")
@@ -95,10 +97,11 @@ describe FiguresController do
     get "/figures/#{@figure.id}/edit"
 
     expect(last_response.status).to eq(200)
+
     expect(last_response.body).to include('<form')
     expect(last_response.body).to include('figure[name]')
     expect(last_response.body).to include('figure[title_ids]')
-    expect(last_response.body).to include(@figure.name)    
+    expect(last_response.body).to include(@figure.name)
   end
 
 
@@ -110,7 +113,7 @@ describe FiguresController do
     click_button "Edit Figure"
     @figure = Figure.first
     expect(page.current_path).to eq("/figures/#{@figure.id}")
-    expect(page.body).to include(@figure.name)    
+    expect(page.body).to include(@figure.name)
 
     expect(page.body).to include("Big Tower")
     expect(@figure.name).to eq("Missy")

@@ -1,0 +1,14 @@
+<h2>Edit landmarks!!!</h2>
+<form action="/landmarks/<%= @landmark.id %>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <label for="name">Landmark Name:</label><br>
+  <input type="text" name="landmark[name]" id="name" value="<%= @landmark.name %>"><br><br>
+  <% Landmark.all.each do |land| %>
+    <input type="checkbox" name="landmark[]" value="<%= land.id%>"><%= land.name %><br>
+  <% end %>
+  <br><br>
+  <label for="landmark_year_completed">Landmark Year Compeleted:</label><br>
+  <input type="text" name="landmark[year_completed]" id="year_completed" value="<%= @landmark.year_completed %>"><br>
+
+  <input type="submit" value="Edit Landmark">
+</form>
